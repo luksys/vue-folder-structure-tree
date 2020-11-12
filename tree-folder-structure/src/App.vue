@@ -1,26 +1,39 @@
 <template>
   <v-app>
     <v-main>
-      <folder-tree
-        :folders="nestedFolders"
-        @create-folder="createFolder"
-      ></folder-tree>
-      <HelloWorld/>
+      <v-container>
+        <h1 class="display-1 mb-4">Folders</h1>
+        <v-treeview :items="nestedFolders">
+          <template v-slot:prepend="{ item, open }">
+            <v-icon>
+              {{ open ? 'mdi-folder-open' : 'mdi-folder' }}
+            </v-icon>
+          </template>
+          <template v-slot:label="{ item }">
+            {{ item.name }}
+            <v-btn
+              @click="createFolder(item.id)"
+              class="mx-2"
+              tile
+              x-small
+              icon
+            >
+              <v-icon dark>
+                mdi-plus
+              </v-icon>
+            </v-btn>
+          </template>
+        </v-treeview>
+      </v-container>
     </v-main>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld'
-import FolderTree from '@/components/folder-tree'
 import { cloneDeep } from 'lodash'
 
 export default {
   name: 'App',
-  components: {
-    FolderTree,
-    HelloWorld
-  },
   computed: {
     nestedFolders () {
       const folders = cloneDeep(this.$store.state.folders)
@@ -55,7 +68,7 @@ export default {
             children.push(this.generateNestedFolders(folders, folder.id)[0])
           }
         })
-        if (children.length) parentFolder.items = children
+        if (children.length) parentFolder.children = children
         return parentFolder
       })
 
