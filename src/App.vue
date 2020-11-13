@@ -57,5 +57,4 @@ export default {
     folderIdTracker: 7
   })
 }
-
 </script>
