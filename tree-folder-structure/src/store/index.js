@@ -63,9 +63,9 @@ export default new Vuex.Store({
             currentFolder = currentFolder.children.find(folderFromList => folderFromList.id === parentId)
           }
 
-          const lastItem = folder.parentIds.length - 1 === index
+          const isLastParentId = folder.parentIds.length - 1 === index
 
-          if (lastItem && !currentFolder.children) {
+          if (isLastParentId && !currentFolder.children) {
             currentFolder.children = []
           }
         })

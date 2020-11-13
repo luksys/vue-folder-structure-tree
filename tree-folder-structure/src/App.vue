@@ -4,7 +4,7 @@
       <v-container>
         <h1 class="display-1 mb-4">Folders</h1>
         <v-treeview :items="folders" item-key="id">
-          <template v-slot:prepend="{ item, open }">
+          <template v-slot:prepend="{ open }">
             <v-icon>
               {{ open ? 'mdi-folder-open' : 'mdi-folder' }}
             </v-icon>
@@ -40,11 +40,11 @@ export default {
   methods: {
     createFolder (id, parentIds) {
       const folderId = this.getNextFolderId()
-      const newParentIds = parentIds ? [...parentIds] : []
-      newParentIds.push(id)
+      const updatedParentIds = parentIds ? [...parentIds] : []
+      updatedParentIds.push(id)
       const folder = {
         id: folderId,
-        parentIds: newParentIds,
+        parentIds: updatedParentIds,
         name: `Folder ${folderId}`
       }
       this.$store.dispatch('addFolder', folder)
